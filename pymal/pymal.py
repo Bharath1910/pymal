@@ -6,7 +6,11 @@ MAL_API_ENDPOINT = "https://api.myanimelist.net/v2"
 class Pymal:
     clientID: str = None
 
-    def __getData(self, pathParams: list[str] = [], queryParams: dict = None) -> dict:
+    def __getData(
+        self, pathParams: list[str] = [], 
+        queryParams: dict = None
+            ) -> dict:
+
         if queryParams is None:
             queryParams = {}
         
@@ -16,7 +20,10 @@ class Pymal:
 
         return r.json()
     
-    def __formatFields(self, fields: list[str] or list[Fields]) -> str:
+    def __formatFields(
+        self, 
+        fields: list[str] or list[Fields]
+            ) -> str:
         fieldString = ""
 
         for field in fields:
