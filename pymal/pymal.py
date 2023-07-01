@@ -39,35 +39,43 @@ class Pymal:
     
     def getAnimeList(
         self, query: str, limit: int = 4,\
+        offset: int = 0, \
         fields: list[Fields] or list[str] = None\
             ) -> list:
 
         res = self.__getData(['anime'], {
             "q": query,
             "limit": limit,
-            "fields": fields
+            "offset": offset,
+            "fields": self.__formatFields(fields)
         })
 
         return res['data']
     
-    def getAnimeDetails(self, animeId: int, fields: list[str] or list[Fields] = None) -> dict:
-        if fields is not None:
-            fields = [field.value for field in fields]
-            fields = ",".join(fields)
+    def getAnimeDetails(
+        self, animeId: int, \
+        fields: list[str] or list[Fields] = None \
+            ) -> dict:
 
         res = self.__getData(['anime', str(animeId)], {
-            "fields": fields
+            "fields": self.__formatFields(fields)
         })
 
         return res
     
-    def getAnimeRanking(self, rankingType: Ranking, limit: int = 100) -> list[dict]:
+    def getAnimeRanking(
+        self, 
+        rankingType: Ranking or str, 
+        limit: int = 100, 
+        offset: int = 0,
+        fields: list[str] or list[Fields] = None
+            ) -> list[dict]:
+
         res = self.__getData(['anime', 'ranking'], {
             "ranking_type": rankingType.value,
-            "limit": limit
+            "limit": limit,
+            "offset": offset,
+            "fields": self.__formatFields(fields)
         })
 
         return res['data']
-    
-    def test(self, fields):
-        return self.__formatFields(fields)

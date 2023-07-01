@@ -1,6 +1,6 @@
 from enum import Enum
 
-class AnimeFields(Enum):
+class Fields(Enum):
     ALL = """id,title,main_picture,alternative_titles,
              start_date,end_date,synopsis,mean,rank,
              popularity,num_list_users,num_scoring_users,
