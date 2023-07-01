@@ -50,7 +50,7 @@ class Pymal:
             "fields": self.__formatFields(fields)
         })
 
-        return res['data']
+        return res
     
     def getAnimeDetails(
         self, animeId: int, \
@@ -78,4 +78,24 @@ class Pymal:
             "fields": self.__formatFields(fields)
         })
 
-        return res['data']
+        return res
+
+    def getSeasonalAnime(
+        self,
+        year: int,
+        season: Season or str,
+
+        sort: str = "anime_score",
+        limit: int = 100,
+        offset: int = 0,
+        fields: list[str] or list[Fields] = None
+            ) -> list[dict]:
+
+        res = self.__getData(['anime', 'season', str(year), season], {
+            "sort": sort,
+            "limit": limit,
+            "offset": offset,
+            "fields": self.__formatFields(fields)
+        })
+
+        return res
