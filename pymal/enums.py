@@ -43,3 +43,19 @@ class AnimeFields(Enum):
     STUDIOS = "studios"
     STATISTICS = "statistics"
 
+class Ranking(Enum):
+    ALL = "all"
+    AIRING = "airing"
+    UPCOMING = "upcoming"
+    TV = "tv"
+    OVA = "ova"
+    MOVIE = "movie"
+    SPECIAL = "special"
+    BY_POPULARITY = "bypopularity"
+    FAVORITE = "favorite"
+
+class Season(Enum):
+    WINTER = "winter"
+    SPRING = "spring"
+    SUMMER = "summer"
+    FALL = "fall"
