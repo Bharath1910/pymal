@@ -1,4 +1,5 @@
 import requests
+from .enums import Ranking
 
 MAL_API_ENDPOINT = "https://api.myanimelist.net/v2"
 
@@ -37,3 +38,13 @@ class Pymal:
         })
 
         return r.json()
+    
+    def getAnimeRanking(self, rankingType: Ranking, limit: int = 100):
+        r = requests.get(f"{MAL_API_ENDPOINT}/anime/ranking", headers={
+            "X-MAL-CLIENT-ID": self.clientID
+        }, params={
+            "ranking_type": rankingType.value,
+            "limit": limit
+        })
+
+        return r.json()['data']
