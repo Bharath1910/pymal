@@ -53,3 +53,5 @@ print(res)
 ---
 
 Please consider donating to support the project.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/bharath1910)
