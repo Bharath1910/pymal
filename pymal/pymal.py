@@ -1,5 +1,5 @@
 import requests
-from .enums import Ranking
+from .enums import Ranking, Fields, Season
 
 MAL_API_ENDPOINT = "https://api.myanimelist.net/v2"
 
@@ -15,6 +15,20 @@ class Pymal:
         }, params=queryParams)
 
         return r.json()
+    
+    def __formatFields(self, fields: list[str] or list[Fields]) -> str:
+        fieldString = ""
+
+        for field in fields:
+            if type(field) is str:
+                fieldString += field
+            
+            elif isinstance(field, Fields):
+                fieldString += field.value
+            
+            fieldString += ","
+        
+        return fieldString[:-1]
 
     def __init__(self, clientID: str) -> None:
         self.clientID = clientID
@@ -23,15 +37,20 @@ class Pymal:
         if res['message'] == 'Invalid client id':
             raise Exception("Invalid client ID")
     
-    def getAnimeList(self, query: str, limit: int = 4) -> list:
+    def getAnimeList(
+        self, query: str, limit: int = 4,\
+        fields: list[Fields] or list[str] = None\
+            ) -> list:
+
         res = self.__getData(['anime'], {
             "q": query,
-            "limit": limit
+            "limit": limit,
+            "fields": fields
         })
 
         return res['data']
     
-    def getAnimeDetails(self, animeId: int, fields: list = None) -> dict:
+    def getAnimeDetails(self, animeId: int, fields: list[str] or list[Fields] = None) -> dict:
         if fields is not None:
             fields = [field.value for field in fields]
             fields = ",".join(fields)
@@ -42,10 +61,13 @@ class Pymal:
 
         return res
     
-    def getAnimeRanking(self, rankingType: Ranking, limit: int = 100):
+    def getAnimeRanking(self, rankingType: Ranking, limit: int = 100) -> list[dict]:
         res = self.__getData(['anime', 'ranking'], {
             "ranking_type": rankingType.value,
             "limit": limit
         })
 
         return res['data']
+    
+    def test(self, fields):
+        return self.__formatFields(fields)
